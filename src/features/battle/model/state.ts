@@ -5,7 +5,7 @@ import type {
   CardInstance,
   JourneyContext,
 } from "@/shared/domain";
-import { cards } from "@/shared/cards";
+import { specOf } from "@/shared/cards";
 import { uid } from "@/shared/random";
 import { spawnEnemy, enemyIntent, type Enemy } from "../lib/enemies";
 import { makePiles, drawCards, discardHand, type Piles } from "../lib/piles";
@@ -102,7 +102,7 @@ export function playCard(id: string) {
   if (state.phase !== "playing") return false;
   const card = state.piles.hand.find((c) => c.id === id);
   if (!card) return false;
-  const spec = cards[card.key]!;
+  const spec = specOf(card);
   if (state.energy < spec.cost) return false;
   state.energy -= spec.cost;
   state.piles.hand = state.piles.hand.filter((c) => c.id !== id);

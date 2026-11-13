@@ -18,6 +18,8 @@ import {
   removeCard,
   openCamp,
   useCamp,
+  addMaterial,
+  fuseCards,
   resetDeck,
 } from "@/features/deck";
 import { openReward, claimReward, resetReward } from "@/features/reward";
@@ -89,13 +91,19 @@ export function claim(skip: boolean) {
   const grant = claimReward(skip);
   if (!grant) return;
   if (grant.card) addCard(grant.card);
+  if (grant.material) addMaterial(grant.material, grant.materialCount);
   earnGold(grant.gold);
   heal(grant.heal);
   resolveRoute();
   if (session.context?.kind === "boss") {
     finishRun();
     notify("裂隙已被封存。你把余烬带回了黎明。");
-  } else notify("奖励已结算，新的路线开放。");
+  } else
+    notify(
+      grant.material
+        ? "熔铸材料已收入行囊，可在牌组页融合锻造。"
+        : "奖励已结算，新的路线开放。",
+    );
   switchTab("route");
   persist();
 }
@@ -109,8 +117,13 @@ export function buy(id: string) {
     earnGold(p.price);
     return;
   }
-  addCard(p.card);
-  notify("交易完成，卡牌已收入牌组。");
+  if (p.kind === "material") {
+    addMaterial(p.key, 1);
+    notify("熔铸材料已收入行囊。");
+  } else {
+    addCard(p.key);
+    notify("交易完成，卡牌已收入牌组。");
+  }
   persist();
 }
 export function leaveShop() {
@@ -141,6 +154,16 @@ export function remove(id: string) {
     removeCard(id)
       ? "已移除卡牌。"
       : "无法移除：至少保留五张牌，且需要足够金币。",
+  );
+  persist();
+}
+export function fuse() {
+  if (battleState.phase === "playing") return;
+  const recipe = fuseCards(deckState.fusionMain, deckState.fusionSub);
+  notify(
+    recipe
+      ? `熔铸完成：${recipe.name}。配方已封存，素材与熔核已消耗。`
+      : "无法熔铸：请选择两张不同的牌，并备足余烬熔核。",
   );
   persist();
 }

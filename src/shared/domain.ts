@@ -15,10 +15,27 @@ export interface RouteNode {
   influence: Influence;
   next: string[];
 }
+export interface FusionLineage {
+  role: "主卡" | "辅卡";
+  key: string;
+  name: string;
+  upgraded: boolean;
+}
+export interface FusionRecipe {
+  id: string;
+  name: string;
+  cost: number;
+  kind: "attack" | "skill" | "power";
+  text: string;
+  effects: Effect[];
+  lineage: FusionLineage[];
+  materials: number;
+}
 export interface CardInstance {
   id: string;
   key: string;
   upgraded: boolean;
+  fusion?: FusionRecipe;
 }
 export interface CardSpec {
   key: string;
@@ -27,7 +44,7 @@ export interface CardSpec {
   kind: "attack" | "skill" | "power";
   text: string;
   rarity: "common" | "rare";
-  effects: Effect[];
+  effects: readonly Effect[];
 }
 export type Effect = {
   type: "damage" | "block" | "draw" | "poison" | "strength" | "heal" | "energy";
@@ -61,13 +78,15 @@ export interface RewardOffer {
   id: string;
   source: string;
   cards: string[];
+  materials: string[];
   gold: number;
   heal: number;
   claimed: boolean;
 }
 export interface Purchase {
   id: string;
-  card: string;
+  kind: "card" | "material";
+  key: string;
   price: number;
 }
 export interface ExpeditionSummary {

@@ -1,4 +1,14 @@
-import type { CardSpec } from "./domain";
+import type { CardSpec, Effect } from "./domain";
+export interface CardSpecSource {
+  key: string;
+  fusion?: {
+    readonly name: string;
+    readonly cost: number;
+    readonly kind: "attack" | "skill" | "power";
+    readonly text: string;
+    readonly effects: readonly Effect[];
+  };
+}
 export const cards: Record<string, CardSpec> = {
   strike: {
     key: "strike",
@@ -78,4 +88,18 @@ export const cards: Record<string, CardSpec> = {
 };
 export function cardLabel(key: string) {
   return cards[key]?.name ?? key;
+}
+export function specOf(card: CardSpecSource): CardSpec {
+  const f = card.fusion;
+  if (f)
+    return {
+      key: card.key,
+      name: f.name,
+      cost: f.cost,
+      kind: f.kind,
+      text: f.text,
+      rarity: "rare",
+      effects: f.effects,
+    };
+  return cards[card.key]!;
 }

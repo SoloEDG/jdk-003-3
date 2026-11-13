@@ -25,7 +25,7 @@ export function itemPrice(id: string) {
 export function preparePurchase(id: string): Purchase | null {
   const item = state.stock.find((s) => s.id === id);
   if (!state.open || !item || item.sold) return null;
-  return { id: item.id, card: item.card, price: itemPrice(id) };
+  return { id: item.id, kind: item.kind, key: item.key, price: itemPrice(id) };
 }
 export function completePurchase(p: Purchase) {
   const item = state.stock.find((s) => s.id === p.id);
@@ -42,6 +42,7 @@ export function exportShop() {
 }
 export function restoreShop(d: ReturnType<typeof exportShop>) {
   Object.assign(state, d);
+  state.stock = (state.stock ?? []).map((s) => ({ ...s, kind: s.kind ?? "card" }));
 }
 export function resetShop() {
   state.context = null;

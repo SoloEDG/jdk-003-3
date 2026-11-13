@@ -74,6 +74,9 @@ const progress = computed(() => (routeState.visited.length / 9) * 100);
             <small>金币</small><b class="gold">{{ deckState.hero.gold }}</b>
           </div>
           <div>
+            <small>熔核</small><b>{{ deckState.materials.ember_core ?? 0 }}</b>
+          </div>
+          <div>
             <small>牌组</small><b>{{ deckState.cards.length }}</b>
           </div>
         </div>
@@ -109,6 +112,7 @@ const progress = computed(() => (routeState.visited.length / 9) * 100);
             @upgrade="commands.upgrade"
             @remove="commands.remove"
             @camp="commands.camp"
+            @fuse="commands.fuse"
           />
         </div>
         <aside class="right-rail">

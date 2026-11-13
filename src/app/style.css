@@ -618,6 +618,94 @@ details {
   font-size: 11px;
   margin-right: 10px;
 }
+.forge {
+  padding: 18px;
+  background: #2b2533;
+  margin-bottom: 20px;
+  border: 1px solid #54486e;
+}
+.forge h3 {
+  font-size: 14px;
+}
+.forge-slots {
+  display: flex;
+  gap: 12px;
+  margin: 14px 0;
+}
+.forge-slots label {
+  flex: 1;
+  font-size: 10px;
+  color: #9a8fb8;
+  display: block;
+}
+.forge-slots select {
+  width: 100%;
+  margin-top: 6px;
+  background: #1d1826;
+  color: #ddd5f0;
+  border: 1px solid #54486e;
+  padding: 8px;
+  font-size: 12px;
+}
+.forge-rules {
+  font-size: 10px;
+  color: #9a8fb8;
+  margin-bottom: 10px;
+}
+.forge-rules summary {
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+.forge-rules ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  line-height: 1.8;
+}
+.forge-preview {
+  border: 1px dashed #6e5d8a;
+  padding: 14px;
+  margin-top: 12px;
+  font-size: 11px;
+}
+.forge-preview h4 {
+  font-size: 13px;
+  color: #e6ddf7;
+}
+.forge-preview h4 small {
+  color: #9a8fb8;
+  font-weight: normal;
+  margin-left: 8px;
+}
+.forge-preview ol {
+  margin: 10px 0;
+  padding-left: 18px;
+}
+.forge-preview li {
+  margin: 4px 0;
+  color: #bdb2d8;
+}
+.forge-preview p {
+  margin: 6px 0;
+  color: #9a8fb8;
+  line-height: 1.7;
+}
+.forge-preview .warn {
+  color: #e0a06a;
+}
+.forge-preview .toolbar {
+  margin-top: 12px;
+}
+.forge-preview .toolbar button {
+  font-size: 11px;
+}
+.fusion-badge {
+  color: #c9a0e8;
+  margin-left: 5px;
+  font-size: 10px;
+}
+.lineage {
+  color: #7a6f96 !important;
+}
 .stock > div {
   display: flex;
   align-items: center;

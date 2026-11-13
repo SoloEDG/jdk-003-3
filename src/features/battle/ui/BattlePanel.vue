@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { battleState, currentIntent } from "../model/state";
-import { cards } from "@/shared/cards";
+import { specOf } from "@/shared/cards";
 import ActorCard from "./ActorCard.vue";
 defineEmits<{ play: [id: string]; end: []; settle: [] }>();
 </script>
@@ -44,20 +44,23 @@ defineEmits<{ play: [id: string]; end: []; settle: [] }>();
           :key="c.id"
           class="playing-card"
           :data-hand-id="c.id"
-          :disabled="cards[c.key]!.cost > battleState.energy"
+          :disabled="specOf(c).cost > battleState.energy"
           @click="$emit('play', c.id)"
         >
-          <i>{{ cards[c.key]!.cost }}</i
+          <i>{{ specOf(c).cost }}</i
           ><span>{{
-            cards[c.key]!.kind === "attack"
+            specOf(c).kind === "attack"
               ? "⚔"
-              : cards[c.key]!.kind === "power"
+              : specOf(c).kind === "power"
                 ? "✺"
                 : "◇"
           }}</span>
-          <h3>{{ cards[c.key]!.name }}{{ c.upgraded ? " +" : "" }}</h3>
-          <p>{{ cards[c.key]!.text }}<b v-if="c.upgraded"> 效果 +2</b></p>
-          <small>{{ cards[c.key]!.kind.toUpperCase() }}</small>
+          <h3>
+            {{ specOf(c).name }}{{ c.upgraded ? " +" : ""
+            }}<b v-if="c.fusion" class="fusion-badge">熔</b>
+          </h3>
+          <p>{{ specOf(c).text }}<b v-if="c.upgraded"> 效果 +2</b></p>
+          <small>{{ specOf(c).kind.toUpperCase() }}</small>
         </button>
       </div>
     </div>

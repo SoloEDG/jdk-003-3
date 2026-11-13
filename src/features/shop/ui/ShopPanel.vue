@@ -2,6 +2,7 @@
 import { shopState, itemPrice } from "../model/state";
 import { quoteMessage } from "../lib/pricing";
 import { cards } from "@/shared/cards";
+import { materials } from "@/shared/materials";
 defineProps<{ gold: number }>();
 defineEmits<{ buy: [id: string]; leave: [] }>();
 </script>
@@ -23,8 +24,16 @@ defineEmits<{ buy: [id: string]; leave: [] }>();
       <div class="stock">
         <div v-for="item in shopState.stock" :key="item.id">
           <div>
-            <b>{{ cards[item.card]?.name }}</b
-            ><small>{{ cards[item.card]?.text }}</small>
+            <b>{{
+              item.kind === "material"
+                ? materials[item.key]?.name
+                : cards[item.key]?.name
+            }}</b
+            ><small>{{
+              item.kind === "material"
+                ? materials[item.key]?.text
+                : cards[item.key]?.text
+            }}</small>
           </div>
           <button
             :disabled="item.sold || gold < itemPrice(item.id)"
